@@ -28,3 +28,24 @@ TARGET_LINK_LIBRARIES(spdlog_Test pthread)
 add_definitions(-DSPDLOG_DEBUG_ON)
 add_definitions(-DSPDLOG_TRACE_ON)
 set(CMAKE_BUILD_TYPE Debug)
+
+# find clang-format tools
+find_program(CLANG_FORMAT NAMES clang-format)
+
+# make sure clang-format is found, if not, should execute the following command
+# sudo apt-get install clang-format
+if(NOT CLANG_FORMAT)
+    message(FATAL_ERROR "clang-format not found. Please install clang-format.")
+endif()
+
+# add a custom target for code formatting
+FILE(GLOB_RECURSE TEST_HPP_LIST ${PATH_TEST_FILES}/*.hpp)
+add_custom_target(codeformat
+    COMMAND ${CLANG_FORMAT} -i -style=file ${TEST_CPP_LIST}
+    COMMAND ${CLANG_FORMAT} -i -style=file ${TEST_HPP_LIST}
+    COMMENT "Formatting source code with clang-format"
+)
+
+# set the "codeformat" target as an executable target, so that it will be
+# executed when running "make codeformat"
+set_target_properties(codeformat PROPERTIES EXECUTABLE TRUE)
