@@ -20,6 +20,9 @@ FILE(GLOB_RECURSE TEST_CPP_LIST ${PATH_TEST_FILES}/*.cpp)
 #FILE(GLOB_RECURSE SRC_CPP_LIST ${PATH_SRC_FILES}/*.cpp)
 #MESSAGE(STATUS "cpp list: ${TEST_CPP_LIST} ${SRC_CPP_LIST}")
 
+add_definitions(-DSPDLOG_DEBUG_ON)
+add_definitions(-DSPDLOG_TRACE_ON)
+
 # 编译可执行程序
 ADD_EXECUTABLE(spdlog_Test ${TEST_CPP_LIST}) #${SRC_CPP_LIST})
 # 用来为target添加需要链接的共享库，指定工程所用的依赖库，包括动态库和静态库

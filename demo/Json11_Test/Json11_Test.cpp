@@ -46,7 +46,7 @@ int test4()
 	//std::istringstream  
 	std::filebuf in;
 #ifdef __linux__
-	if (!in.open("testdata/json.data", std::ios::in)) {
+	if (!in.open("/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/testdata/json.data", std::ios::in)) {
 #else
 	if (!in.open("../../../testdata/json.data", std::ios::in)) {
 #endif

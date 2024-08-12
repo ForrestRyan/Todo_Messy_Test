@@ -16,7 +16,7 @@ endif()
 
 add_library(spdlog INTERFACE)
 
-option(SPDLOG_BUILD_EXAMPLES "Build examples" OFF)
+option(SPDLOG_BUILD_EXAMPLES "Build examples" ON)
 option(SPDLOG_BUILD_TESTING "Build spdlog tests" ON)
 
 target_include_directories(
@@ -54,6 +54,9 @@ include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
     "${version_config}" COMPATIBILITY SameMajorVersion
 )
+
+add_definitions(-DSPDLOG_DEBUG_ON)
+add_definitions(-DSPDLOG_TRACE_ON)
 
 # Note: use 'targets_export_name'
 configure_file("cmake/Config.cmake.in" "${project_config}" @ONLY)

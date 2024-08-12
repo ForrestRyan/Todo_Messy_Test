@@ -26,12 +26,14 @@ int test_spdlog_console()
 		console->info("{:<30}", "left aligned");
 
 		SPDLOG_DEBUG_IF(console, true, "This is a debug log");
+		console->info_if(true, "test SPDLOG_DEBUG_IF");
+		console->info("test SPDLOG_DEBUG");
 
 		spd::get("console")->info("loggers can be retrieved from a global registry using the spdlog::get(logger_name) function");
 
 		// Create basic file logger (not rotated)
 #ifdef __linux__
-		auto my_logger = spd::basic_logger_mt("basic_logger", "testdata/basic_log");
+		auto my_logger = spd::basic_logger_mt("basic_logger", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/basic_log");
 #else
 		auto my_logger = spd::basic_logger_mt("basic_logger", "../../../testdata/basic_log");
 #endif
@@ -39,7 +41,7 @@ int test_spdlog_console()
 
 		// Create a file rotating logger with 5mb size max and 3 rotated files
 #ifdef __linux__
-		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "testdata/mylogfile_log", 1048576 * 5, 3);
+		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/basic_log", 1048576 * 5, 3);
 #else
 		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "../../../testdata/mylogfile_log", 1048576 * 5, 3);
 #endif
@@ -48,7 +50,7 @@ int test_spdlog_console()
 
 		// Create a daily logger - a new file is created every day on 2:30am
 #ifdef __linux__
-		auto daily_logger = spd::daily_logger_mt("daily_logger", "testdata/daily_log", 2, 30);
+		auto daily_logger = spd::daily_logger_mt("daily_logger", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/daily_log", 2, 30);
 #else
 		auto daily_logger = spd::daily_logger_mt("daily_logger", "../../../testdata/daily_log", 2, 30);
 #endif
@@ -94,7 +96,7 @@ int test_spdlog_async()
 	size_t q_size = 4096; //queue size must be power of 2
 	spdlog::set_async_mode(q_size);
 #ifdef __linux__
-	auto async_file = spd::daily_logger_st("async_file_logger", "testdata/async_log");
+	auto async_file = spd::daily_logger_st("async_file_logger", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/async_log");
 #else
 	auto async_file = spd::daily_logger_st("async_file_logger", "../../../testdata/async_log");
 #endif
