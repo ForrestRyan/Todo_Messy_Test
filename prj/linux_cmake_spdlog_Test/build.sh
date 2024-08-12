@@ -19,3 +19,6 @@ make
 
 cd -
 
+echo "----------Start to exectute test----------"
+./build/spdlog_Test
+echo "-----------Done! Test finished--------"

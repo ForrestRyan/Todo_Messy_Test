@@ -19,3 +19,7 @@ make
 
 cd -
 
+echo "----------Start to exectute test----------"
+./build/cJSON_Test
+echo "-----------Done! Test finished--------"
+

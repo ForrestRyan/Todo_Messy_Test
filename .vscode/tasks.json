@@ -1,0 +1,54 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}/prj/linux_cmake_spdlog_Test/build"
+    },
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "VAVersion",
+            "command": "sh",
+            "args": [
+                "./include/VAVersion.sh"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "cmake",
+            "command": "cmake",
+            "args": [
+                ".."
+            ]
+        },
+        {
+            "label": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "make",
+            "args": []
+        },
+        {
+            "label": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "../build.sh",
+            "args": []
+        },
+        {
+            "label": "BuildTasks",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                // "VAVersion",
+                // "cmake",
+                // "make"
+                "build"
+            ]
+        }
+    ],
+}

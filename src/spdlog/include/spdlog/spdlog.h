@@ -176,11 +176,15 @@ void drop_all();
 #endif
 
 #ifdef SPDLOG_DEBUG_ON
-#define SPDLOG_DEBUG(logger, ...) logger->info(__VA_ARGS__)
-#define SPDLOG_DEBUG_IF(logger, flag, ...) logger->info_if(flag, __VA_ARGS__)
+#define SPDLOG_DEBUG(logger, ...) logger->debug(__VA_ARGS__)
+#define SPDLOG_DEBUG_IF(logger, flag, ...) logger->debug_if(flag, __VA_ARGS__)
+#define SPDLOG_INFO(logger, ...) logger->info(__VA_ARGS__)
+#define SPDLOG_INFO_IF(logger, flag, ...) logger->info_if(flag, __VA_ARGS__)
 #else
-// #define SPDLOG_DEBUG(logger, ...)
-// #define SPDLOG_DEBUG_IF(logger, flag, ...)
+#define SPDLOG_DEBUG(logger, ...)
+#define SPDLOG_DEBUG_IF(logger, flag, ...)
+#define SPDLOG_INFO(logger, ...)
+#define SPDLOG_INFO_IF(logger, flag, ...)
 #endif
 
 }

@@ -25,15 +25,16 @@ int test_spdlog_console()
 		console->info("Positional args are {1} {0}..", "too", "supported");
 		console->info("{:<30}", "left aligned");
 
+		// SPDLOG_DEBUG_IF can NOT be used, if spd::level::debug is not enabled
+		console->set_level(spd::level::debug); // Default value of logger's log level is info
 		SPDLOG_DEBUG_IF(console, true, "This is a debug log");
-		console->info_if(true, "test SPDLOG_DEBUG_IF");
-		console->info("test SPDLOG_DEBUG");
+		SPDLOG_INFO_IF(console, true, "This is a info log");
 
 		spd::get("console")->info("loggers can be retrieved from a global registry using the spdlog::get(logger_name) function");
 
 		// Create basic file logger (not rotated)
 #ifdef __linux__
-		auto my_logger = spd::basic_logger_mt("basic_logger", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/basic_log");
+		auto my_logger = spd::basic_logger_mt("basic_logger", "testdata/basic_log");
 #else
 		auto my_logger = spd::basic_logger_mt("basic_logger", "../../../testdata/basic_log");
 #endif
@@ -41,7 +42,7 @@ int test_spdlog_console()
 
 		// Create a file rotating logger with 5mb size max and 3 rotated files
 #ifdef __linux__
-		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/basic_log", 1048576 * 5, 3);
+		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "testdata/basic_log", 1048576 * 5, 3);
 #else
 		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "../../../testdata/mylogfile_log", 1048576 * 5, 3);
 #endif
@@ -50,7 +51,7 @@ int test_spdlog_console()
 
 		// Create a daily logger - a new file is created every day on 2:30am
 #ifdef __linux__
-		auto daily_logger = spd::daily_logger_mt("daily_logger", "/home/ryan/ryan-files/ryan-dev/Todo_Messy_Test/prj/linux_cmake_spdlog_Test/testdata/daily_log", 2, 30);
+		auto daily_logger = spd::daily_logger_mt("daily_logger", "testdata/daily_log", 2, 30);
 #else
 		auto daily_logger = spd::daily_logger_mt("daily_logger", "../../../testdata/daily_log", 2, 30);
 #endif
@@ -70,6 +71,7 @@ int test_spdlog_console()
 
 		// Compile time log levels
 		// define SPDLOG_DEBUG_ON or SPDLOG_TRACE_ON
+		console->set_level(spd::level::trace); // Set specific logger's log level
 		SPDLOG_TRACE(console, "Enabled only #ifdef SPDLOG_TRACE_ON..{} ,{}", 1, 3.23);
 		SPDLOG_DEBUG(console, "Enabled only #ifdef SPDLOG_DEBUG_ON.. {} ,{}", 1, 3.23);
 		SPDLOG_DEBUG_IF(console, true, "This is a debug log");
